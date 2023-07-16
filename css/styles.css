@@ -21,6 +21,20 @@ body {
   overflow-x: hidden;
 }
 
+header,
+.collapsible {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: white;
+}
+
+.header {
+  position: sticky;
+  top: 4rem;
+  z-index: 1;
+}
+
 .nav-header {
   display: flex;
   justify-content: space-between;
@@ -36,14 +50,17 @@ body {
   margin-left: -9rem;
 }
 
-.bars {
-  position: sticky;
+.bars.collapsible__chevron {
+  position: fixed;
   left: 0;
+}
+
+.bars {
   margin-top: 1.5rem;
   /* transform: translateX(-200px); */
-  margin-left: -100px;
   margin-top: 0;
   padding-left: 0;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1000px) {
@@ -211,10 +228,6 @@ aside {
 
 .subscription {
   margin-left: 35px;
-}
-.bars {
-  /* margin-rem; */
-  cursor: pointer;
 }
 
 .home {

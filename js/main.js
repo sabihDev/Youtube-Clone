@@ -18,19 +18,32 @@ const dropDownContent = document.querySelector('.drop-down-create');
 let countButtonClicks = 0;
 let create = false;
 let notificationss = false;
+let accounts = false;
 
 createDropDownBtn.addEventListener('click', function () {
-  countButtonClicks += 1;
-  create = true;
 
-  if (create === true) {
-    if (countButtonClicks % 2 === 1)
-      OpenCreateDropDown();
-
-    else
-      CloseCreateDropDown();
-
+  if (accounts === true && notificationss === true) {
+    CloseAccount();
+    accounts = false;
+    CloseNotification();
+    notificationss = false;
+  } else if (accounts === true) {
+    CloseAccount();
+    accounts = false;
+  } else if (notificationss === true) {
+    CloseNotification();
+    notificationss = false;
+  } else {
+    create = true;
+    countButtonClicks += 1;
+    if (create === true) {
+      if (countButtonClicks % 2 === 1)
+        OpenCreateDropDown();
+      else
+        CloseCreateDropDown();
+    }
   }
+
 })
 
 function OpenCreateDropDown() {
@@ -49,22 +62,88 @@ const notificationBtn = document.getElementById('drop-down-notifications-btn');
 const notification = document.querySelector('.drop-down-notifications');
 
 notificationBtn.addEventListener('click', function () {
-  clicks += 1;
-  if (clicks % 2 === 1)
-    notification.classList.remove(notification.classList[2]);
-  else
-    notification.classList.add('hidden');
+  if (create === true && accounts === true) {
+    CloseCreateDropDown();
+    create = false;
+    CloseAccount();
+    accounts = false;
+  } else if (create === true) {
+    CloseCreateDropDown();
+    create = false;
+  } else if (accounts === true) {
+    CloseAccount();
+    accounts = false;
+  } else {
+    notificationss = true;
+    clicks += 1;
+    if (notificationss === true) {
+      if (clicks % 2 === 1) {
+        OpenNotification();
+      }
+      else {
+        CloseNotification();
+      }
+    }
+  }
 
 });
+
+function OpenNotification() {
+  notification.classList.remove(notification.classList[2]);
+}
+function CloseNotification() {
+  notification.classList.add('hidden');
+}
 
 let accountClicks = 0;
 let accountDropDown = document.querySelector('.drop-down-account');
 let account = document.getElementById('your-account');
 account.addEventListener('click', function () {
-  accountClicks += 1;
-  if (accountClicks % 2 === 1)
-    accountDropDown.classList.remove(accountDropDown.classList[2]);
-  else
-    accountDropDown.classList.add('hidden');
+  if (create === true && notificationss === true) {
+    CloseCreateDropDown();
+    create = false;
+    CloseNotification();
+    notificationss = false;
+  } else if (create === true) {
+    CloseCreateDropDown();
+    create = false;
+  } else if (notificationss === true) {
+    CloseNotification();
+    notificationss = false;
+  } else {
+    accounts = true;
+    accountClicks += 1;
+    if (accounts === true) {
+      if (accountClicks % 2 === 1)
+        OpenAccount();
+      else
+        CloseAccount();
+    }
+  }
+
 
 });
+
+
+function OpenAccount() {
+  accountDropDown.classList.remove(accountDropDown.classList[2]);
+}
+function CloseAccount() {
+  accountDropDown.classList.add('hidden');
+}
+
+function CloseDropDown() {
+  if (create === true) {
+    CloseCreateDropDown();
+    create = false;
+    countButtonClicks -= 1;
+  } else if (notificationss === true) {
+    CloseNotification();
+    notificationss = false;
+    clicks -= 1;
+  } else if (accounts === true) {
+    CloseAccount();
+    accounts = false;
+    accountClicks -= 1;
+  }
+}
